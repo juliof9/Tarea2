@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class FiltroDao implements metodos <filtro> {
     
-    private static final String SQL_INSERT ="INSERRT INTO filtros_aceite(codFiltro,marca,stock,existencia) VALUES (?,?,?,?)";
+    private static final String SQL_INSERT ="INSERT INTO filtros_aceite(codFiltro,marca,stock,existencia) VALUES (?,?,?,?)";
     private static final String SQL_UPDATE ="UPDATE filtros_aceite SET marca =?,stock=?, existencia =? WHERE codFiltro=?";
     private static final String SQL_DELETE = "DELETE FROM filtros_aceite WHERE codFiltro=?";
     private static final String SQL_READ ="SELECT * FROM filtros_aceite WHERE codFiltro=?";

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package conexion;
 
 import com.mysql.jdbc.Connection;
@@ -12,10 +7,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import sun.util.logging.PlatformLogger;
 
-/**
- *
- * @author LN710Q
- */
 public class conexion {
     private String user;
     private String pass;

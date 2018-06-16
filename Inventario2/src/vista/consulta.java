@@ -87,6 +87,18 @@ public class consulta extends JFrame{
         eliminar = new JButton("Eliminar");
         actualizar = new JButton("Actualizar");
         limpiar = new JButton("Limpiar");
+        
+        table = new JPanel();
+        
+        marca.addItem("FRAM");
+        marca.addItem("WIX");
+        marca.addItem("Luber Finer");
+        marca.addItem("OSK");
+        
+        existencia = new ButtonGroup();
+        existencia.add(si);
+        existencia.add(no);
+        
         codigo.setBounds(140, 10, ANCHOC, ALTOC);
         marca.setBounds(140, 60, ANCHOC, ALTOC);
         stock.setBounds(140, 100, ANCHOC, ALTOC);
@@ -137,13 +149,13 @@ public class consulta extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e){
                 FiltroDao fd = new FiltroDao();
-                filtro f = new filtro(codigo.getText(), marca.getSelectedItem().toString()),
+                filtro f = new filtro(codigo.getText(), marca.getSelectedItem().toString(),
                         Integer.parseInt(stock.getText()), true);
                 if (no.isSelected()){
                     f.setExistencia(false);
                 }
-                if (fd.update(f)){
-                    JOptionPane.showMessageDialog(null, "Filtro Modificado con exito");
+                if (fd.create(f)){
+                    JOptionPane.showMessageDialog(null, "Filtro registrado con exito");
                     limpiarCampos();
                     llenarTabla();
                 }
@@ -155,9 +167,73 @@ public class consulta extends JFrame{
         actualizar.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {
-                throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                FiltroDao fd = new FiltroDao();
+                filtro f = new filtro(codigo.getText(), marca.getSelectedItem().toString(),
+                        Integer.parseInt(stock.getText()), true);
+                if (no.isSelected()) {
+                    f.setExistencia(false);
+                }
+                if (fd.update(f)){
+                    JOptionPane.showMessageDialog(null, "Filtro Modificado con exito");
+                    limpiarCampos();
+                    llenarTabla();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de modificar el filtro");
+                }
             }
-            
-    });
+        });
+        eliminar.addActionListener(new ActionListener(){
+           @Override
+           public void actionPerformed(ActionEvent e){
+               FiltroDao fd = new FiltroDao();
+               if (fd.delete(codigo.getText())){
+                   JOptionPane.showMessageDialog(null, "Filtro ELiminado con exito");
+                   limpiarCampos();
+                   llenarTabla();
+               } else {
+                   JOptionPane.showMessageDialog(null, "Ocurrio un problema al momento de eliminar filtro");
+               }
+           }
+        });
+        buscar.addActionListener(new ActionListener() {          
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FiltroDao fd = new FiltroDao();
+                filtro f = fd.read(codigo.getText());
+                if (f == null){
+                    JOptionPane.showMessageDialog(null, "El filtro buscado no se ha encontrado");
+                } else{
+                    
+                    codigo.setText(f.getCodigo());
+                    marca.setSelectedItem(f.getMarca());
+                    stock.setText(Integer.toString(f.getStock()));
+                    if (f.getExistencia()){
+                        si.setSelected(true);
+                    } else{
+                        no.setSelected(true);
+                    }
+                }
+            }
+        });
+        limpiar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                limpiarCampos();
+            }
+        });
+    }
+    public void limpiarCampos(){
+            codigo.setText("");
+            marca.setSelectedItem("FRAM");
+            stock.setText("");
+    }
+    
+    public static void main(String[] agrs){
+        java.awt.EventQueue.invokeLater(new Runnable(){
+            @Override
+            public void run(){
+                new consulta().setVisible(true);
+            }
+        });
     }
 }

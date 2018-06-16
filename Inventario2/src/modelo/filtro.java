@@ -27,11 +27,11 @@ public class filtro {
         this.marca=marca;
     }
     
-    public filtro(String codigo, String marca, int stock, boolean exitencia){
-        this.codigo=codigo;
-        this.marca=marca;
-        this.stock=stock;
-        this.existencia=existencia;
+    public filtro(String codigo, String marca, int stock, boolean existencia){
+        this.codigo = codigo;
+        this.marca = marca;
+        this.stock = stock;
+        this.existencia = existencia;
         
     }
     
